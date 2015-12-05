@@ -1,0 +1,16 @@
+{
+  "name": "tsukuba-dist",
+  "version": "0.0.1",
+  "description": "Convert a distance between two locations to Tsukuba Unit distance",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "mecab",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.13.3",
+    "linq": "^3.0.5",
+    "request": "^2.67.0"
+  }
+}
