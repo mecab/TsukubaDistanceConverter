@@ -3,7 +3,7 @@
 @import "neat";
 
 body {
-    background-color: #ffeecf;
+    background-color: #19B8C8;
     margin: 0;
     padding: 0;
 }
@@ -20,7 +20,7 @@ body {
 }
 
 #main {
-    background-color: #ffdea1;
+    background-color: #eeeeee;
 
     .content {
         @include outer-container;
@@ -37,10 +37,16 @@ body {
             @include media($mobile) {
                 @include span-columns(2);
             }
+
+            input[type=text] {
+                @include placeholder {
+                    color: #bbbbbb;
+                }
+            }
         }
     }
 
-    button {
+    input[type=submit] {
         background-color: #46ab36;
         @include span-columns(12);
     }
@@ -49,6 +55,7 @@ body {
         @include span-columns(12);
         @include margin(20px null null null);
         @include padding(20px);
+        border-radius: $base-border-radius;
         background-color: white;
 
         .original {

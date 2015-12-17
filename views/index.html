@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="ja">
   <head>
-    <meta charset="utf8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui" />
     <title>筑波大距離計算器</title>
     {{ css("style") }}
     {% if process.env.NODE_ENV !== "production" %}
@@ -17,24 +18,30 @@
     </header>
     <section id="main">
       <div class="content">
-        <section class="conditions">
-          <div class="location">
-            <label>出発地</label>
-            <input type="text" placeholder="東京駅" />
-          </div>
-          <div class="location">
-            <label>目的地</label>
-            <input type="text" placeholder="有楽町駅" />
-          </div>
-        </section>
-        <button>換算</button>
+        <form data-bind="submit: submit">
+          <section class="conditions">
+            <div class="location">
+              <label>出発地</label>
+              <input type="text" placeholder="東京駅"
+                     data-bind="textInput: origin" />
+            </div>
+            <div class="location">
+              <label>目的地</label>
+              <input type="text" placeholder="有楽町駅"
+                     data-bind="textInput: dest" />
+            </div>
+          </section>
+          <input type="submit" value="換算" data-bind="enable: canSearch" />
+        </form>
         
-        <section class="result">
-          <p class="original">東京駅から有楽町までの距離は</p>
-          <p class="tsukuba">つくば駅から筑波大学附属病院より短いくらいです。</p>
+        <section class="result" data-bind="visible: isResultAvailable, if: isResultAvailable">
+          <p class="original"><span data-bind="text: result().origin"></span>から<span data-bind="text: result().destination"></span>までの距離は</p>
+          <p class="tsukuba"><span data-bind="text: result().description"></span></p>
         </section>
       </div>
     </section>
+
+    {{ js("main") }}
   </body>
 </html>
 

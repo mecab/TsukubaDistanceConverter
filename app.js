@@ -27,7 +27,7 @@ var includePaths = neat.with([
 
 app.use(require('connect-assets')({
     paths: includePaths,
-    precompile: ["style.css"]
+    precompile: ["style.css", "main.js"]
 }));
 
 app.get('/', (req, res) => {
@@ -45,13 +45,20 @@ function makeDistanceExpression(distance, distanceUnit) {
     else {
         expression = "より短い";
     }
-    return `${distanceUnit.start} と ${distanceUnit.end} 間の距離${expression}くらいです。`;
+
+    return expression;
+}
+
+function makeDistanceDescription(distance, distanceUnit) {
+    var expression = makeDistanceExpression(distance, distanceUnit);
+
+    return `「${distanceUnit.start}」と「${distanceUnit.end}」間の距離${expression}くらいです。`;
 }
 
 app.get('/convert/fromDistance', function(req, res) {
     var distance = parseInt(req.query.distance);
     var distanceUnit = convertDistance(distance);
-    var expression = makeDistanceExpression(distance, distanceUnit);    
+    var expression = makeDistanceExpression(distance, distanceUnit);
 
     var response = {
         start: distanceUnit.start,
@@ -100,13 +107,19 @@ app.get('/convert/fromAddress', function(req, res) {
         var distance = element.distance.value;
         var distanceUnit = convertDistance(distance);
         var expression = makeDistanceExpression(distance, distanceUnit);
+        var description = makeDistanceDescription(distance, distanceUnit);
 
         var response = {
+            origin: origin,
+            destination: dest,
             google_origin: originGoogle,
             google_destination: destGoogle,
+            distance: distance,
             start: distanceUnit.start,
             end: distanceUnit.end,
-            text: `${origin}（${originGoogle}）から${dest}（${destGoogle}）間は、${expression}`
+            expression: expression,
+            description: description,
+            description_full: `${origin}（${originGoogle}）から${dest}（${destGoogle}）間は、${description}`
         };
 
         res.json(response);

@@ -4,7 +4,7 @@
   "description": "Convert a distance between two locations to Tsukuba Unit distance",
   "main": "app.js",
   "scripts": {
-    "build": "node ./node_modules/connect-assets/bin/connect-assets -o builtAssets --include `node -e \"console.log(require('node-neat').with(['assets/css']).join(' '))\"` -s /assets -c style.css",
+    "build": "node ./node_modules/connect-assets/bin/connect-assets -o builtAssets --include `node -e \"console.log(require('node-neat').with(['assets/css', 'assets/js']).join(' '))\"` -s /assets -c style.css main.js",
     "start": "npm run build && node app.js",
     "debug": "node-dev app.js"
   },
