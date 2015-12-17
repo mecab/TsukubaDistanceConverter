@@ -1,5 +1,9 @@
+// Tsukuba
+$tsukuba-purple: #6600CC;
+
 // Typography
-$base-font-family: $helvetica;
+@import url("http://fonts.googleapis.com/earlyaccess/notosansjapanese.css");
+$base-font-family: 'Noto Sans Japanese', $helvetica;
 $heading-font-family: $base-font-family;
 
 // Font Sizes
@@ -40,3 +44,12 @@ $form-box-shadow-focus: $form-box-shadow, 0 0 5px adjust-color($action-color, $l
 // Animations
 $base-duration: 150ms;
 $base-timing: ease;
+
+// Header Font Settings
+$header-font-weight: 100;
+
+// Title Settings
+$title-padding: 15px;
+$title-font-size: 3em;
+$title-background-color: $tsukuba-purple;
+$title-color: white;

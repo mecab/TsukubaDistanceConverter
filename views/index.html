@@ -4,11 +4,37 @@
     <meta charset="utf8" />
     <title>筑波大距離計算器</title>
     {{ css("style") }}
+    {% if process.env.NODE_ENV !== "production" %}
+    <script>
+     document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] +
+                    ':35729/livereload.js?snipver=1"></' + 'script>')
+    </script>
+    {% endif %}
   </head>
   <body>
-    <header>
+    <header id="title">
       <h1>筑波大距離計算器</h1>
     </header>
+    <section id="main">
+      <div class="content">
+        <section class="conditions">
+          <div class="location">
+            <label>出発地</label>
+            <input type="text" placeholder="東京駅" />
+          </div>
+          <div class="location">
+            <label>目的地</label>
+            <input type="text" placeholder="有楽町駅" />
+          </div>
+        </section>
+        <button>換算</button>
+        
+        <section class="result">
+          <p class="original">東京駅から有楽町までの距離は</p>
+          <p class="tsukuba">つくば駅から筑波大学附属病院より短いくらいです。</p>
+        </section>
+      </div>
+    </section>
   </body>
 </html>
 
