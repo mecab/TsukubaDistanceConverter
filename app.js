@@ -9,7 +9,6 @@ var request = require('request');
 var neat = require('node-neat');
 var convertDistance = require('./distanceConverter');
 var local = require('./local');
-var ConnectMincer = require('connect-mincer');
 
 var app = new express();
 app.listen(3000, function(err) {
@@ -25,21 +24,11 @@ var includePaths = neat.with([
     'assets/css',
     'assets/js'
 ]);
-var connectMincer = new ConnectMincer({
-    root: __dirname,
-    production: process.env.NODE_ENV === 'production',
-    mountPoint: '/assets',
-    manifestFile: path.join(__dirname, '/builtAssets/manifest.json'),
-    paths: includePaths
-});
 
-app.use(connectMincer.assets());
-
-if (process.env.NODE_ENV == 'production')
-    app.use('/assets', express.static('builtAssets'));
-else
-    app.use('/assets', connectMincer.createServer());
-    
+app.use(require('connect-assets')({
+    paths: includePaths,
+    precompile: ["style.css"]
+}));
 
 app.get('/', (req, res) => {
     res.render('index.html');

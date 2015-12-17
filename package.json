@@ -4,23 +4,19 @@
   "description": "Convert a distance between two locations to Tsukuba Unit distance",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "node ./node_modules/connect-assets/bin/connect-assets -o builtAssets --include `node -e \"console.log(require('node-neat').with(['assets/css']).join(' '))\"` -s /assets -c style.css",
+    "start": "npm run build && node app.js",
+    "debug": "node-dev app.js"
   },
   "author": "mecab",
   "license": "ISC",
   "dependencies": {
-    "connect-mincer": "^1.1.0",
+    "connect-assets": "^5.0.1",
     "express": "^4.13.3",
     "linq": "^3.0.5",
-    "mincer": "^1.4.0",
     "node-neat": "^1.7.2",
     "node-sass": "^3.4.2",
     "request": "^2.67.0",
     "swig": "^1.4.2"
-  },
-  "scripts": {
-      "build": "node compile.js",
-      "start": "npm run build && node app.js",
-      "debug": "node-dev app.js"
   }
 }
