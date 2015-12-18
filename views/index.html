@@ -19,21 +19,29 @@
     <section id="main">
       <div class="content">
         <form data-bind="submit: submit">
-          <section class="conditions">
-            <div class="location">
-              <label>出発地</label>
-              <input type="text" placeholder="東京駅"
-                     data-bind="textInput: origin" />
-            </div>
-            <div class="location">
-              <label>目的地</label>
-              <input type="text" placeholder="有楽町駅"
-                     data-bind="textInput: dest" />
-            </div>
-          </section>
-          <input type="submit" value="換算" data-bind="enable: canSearch" />
+          <ul class="accordion-tabs-minimal">
+            <li class="tab-header-and-content" >
+              <a href="#" class="tab-link is-active">区間を換算</a>
+              <div class="tab-content is-open">
+                <section class="conditions">
+                  <div class="location">
+                    <label>出発地</label>
+                    <input type="text" placeholder="東京駅"
+                           data-bind="textInput: origin" />
+                  </div>
+                  <div class="location">
+                    <label>目的地</label>
+                    <input type="text" placeholder="有楽町駅"
+                           data-bind="textInput: dest" />
+                  </div>
+                </section>
+                <input type="submit" value="換算" data-bind="enable: canSearch" />
+              </div>
+            </li>
+            <li class="tab-header-and-content">
+              <a href="#" class="tab-link">距離を換算</a>
+            </li>
         </form>
-        
         <section class="result" data-bind="visible: isResultAvailable, if: isResultAvailable">
           <p class="original"><span data-bind="text: result().origin"></span>から<span data-bind="text: result().destination"></span>までの距離は</p>
           <p class="tsukuba"><span data-bind="text: result().description"></span></p>

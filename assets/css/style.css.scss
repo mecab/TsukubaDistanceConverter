@@ -2,6 +2,8 @@
 @import "./base/base";
 @import "neat";
 
+@import "./tab";
+
 body {
     background-color: #19B8C8;
     margin: 0;
@@ -20,7 +22,7 @@ body {
 }
 
 #main {
-    background-color: #eeeeee;
+    background-color: #f6f6f6;
 
     .content {
         @include outer-container;
