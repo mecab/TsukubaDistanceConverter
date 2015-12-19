@@ -8,6 +8,12 @@ body {
     background-color: #19B8C8;
     margin: 0;
     padding: 0;
+
+    >footer p {
+        @include padding($base-spacing / 2);
+        color: white;
+        text-align: center;
+    }
 }
 
 #title {
@@ -80,5 +86,4 @@ body {
             font-size: 2em;
         }
     }
-
 }
