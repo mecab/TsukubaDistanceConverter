@@ -18,12 +18,15 @@
     </header>
     <section id="main">
       <div class="content">
-        <form data-bind="submit: submit">
-          <ul class="accordion-tabs-minimal">
-            <li class="tab-header-and-content" >
-              <a href="#" class="tab-link is-active">区間を換算</a>
-              <div class="tab-content is-open">
-                <section class="conditions">
+        <ul class="accordion-tabs-minimal">
+          <li class="tab-header-and-content" >
+            <a href="#" class="tab-link"
+               data-bind="click: changeConverter.bind($data, 'sectionConverterViewModel'),
+                          css: { 'is-active': currentConverterViewModel().constructor.name === 'SectionConverterViewModel' }">区間を換算</a>
+            <div class="tab-content"
+                 data-bind="css: { 'is-open': currentConverterViewModel().constructor.name === 'SectionConverterViewModel' }">
+              <section class="conditions" data-bind="with: sectionConverterViewModel">
+                <form data-bind="submit: submit">
                   <div class="location">
                     <label>出発地</label>
                     <input type="text" placeholder="東京駅"
@@ -34,20 +37,46 @@
                     <input type="text" placeholder="有楽町駅"
                            data-bind="textInput: dest" />
                   </div>
-                </section>
-                <input type="submit" value="換算" data-bind="enable: canSearch" />
-              </div>
-            </li>
-            <li class="tab-header-and-content">
-              <a href="#" class="tab-link">距離を換算</a>
-            </li>
-        </form>
-        <section class="result" data-bind="visible: isResultAvailable, if: isResultAvailable">
-          <p class="original"><span data-bind="text: result().origin"></span>から<span data-bind="text: result().destination"></span>までの距離は</p>
-          <p class="tsukuba"><span data-bind="text: result().description"></span></p>
-        </section>
+                  <input type="submit" value="換算" data-bind="enable: canSearch"/>
+                </form>
+              </section>
+            </div>
+          </li>
+          <li class="tab-header-and-content">
+            <a href="#" class="tab-link"
+               data-bind="click: changeConverter.bind($data, 'distanceConverterViewModel'),
+                          css: { 'is-active': currentConverterViewModel().constructor.name === 'DistanceConverterViewModel' }
+                          ">距離を換算</a>
+            <div class="tab-content" data-bind="css: { 'is-open': currentConverterViewModel().constructor.name === 'DistanceConverterViewModel' }">
+              <section class="conditions" data-bind="with: distanceConverterViewModel">
+                <form data-bind="submit: submit">
+                  <div class="distance">
+                    <label>距離</label>
+                      <input type="text" placeholder="500"
+                             data-bind="textInput: distance" />
+                      <p>メートル</p>
+                  </div>
+                  <input type="submit" value="換算" data-bind="enable: canSearch" />
+                </form>
+              </section>
+            </div>
+          </li>
+          <section class="result" data-bind="visible: isResultAvailable, if: isResultAvailable">
+            <!-- ko template: currentConverterViewModel().templateName -->
+            <!-- /ko -->
+          </section>
       </div>
     </section>
+
+    <script type="text/html" id="SectionConverterTemplate">
+      <p class="original"><span data-bind="text: result().origin"></span>から<span data-bind="text: result().destination"></span>までの距離は</p>
+      <p class="tsukuba"><span data-bind="text: result().description"></span></p>
+    </script>
+
+    <script type="text/html" id="DistanceConverterTemplate">
+      <p class="original"><span data-bind="text: result().distance"></span>メートルは</p>
+      <p class="tsukuba"><span data-bind="text: result().description"></span></p>
+    </script>
 
     {{ js("main") }}
   </body>

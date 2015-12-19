@@ -16,7 +16,7 @@ body {
 
     h1 {
         font-size: $title-font-size;
-        padding: $title-padding;
+        @include padding($title-padding);
         @include margin(null null 0 null);
     }
 }
@@ -26,37 +26,49 @@ body {
 
     .content {
         @include outer-container;
-        @include padding(30px 30px 30px 30px);
+        @include pad(30px 30px 30px 30px);
     }
     
     .conditions {
-        @include span-columns(12);
-        @include outer-container;
-
         .location {
             @include span-columns(6);
+            @include omega(2n);
             
             @include media($mobile) {
                 @include span-columns(2);
             }
+        }
 
-            input[type=text] {
-                @include placeholder {
-                    color: #bbbbbb;
+        .distance {
+            @include span-columns(12);
+
+            @include media($not-mobile) {
+                input {
+                    @include span-columns(10);
+                }
+
+                p {
+                    @include span-columns(2);
+                    @include padding($base-spacing / 3 0 $base-spacing / 3 0);
                 }
             }
         }
-    }
 
-    input[type=submit] {
-        background-color: #46ab36;
-        @include span-columns(12);
+        input[type=text] {
+            @include placeholder {
+                color: #bbbbbb;
+            }
+        }
+        input[type=submit] {
+            @include span-columns(12);
+            background-color: #46ab36;
+        }
     }
 
     .result {
         @include span-columns(12);
         @include margin(20px null null null);
-        @include padding(20px);
+        @include pad(20px);
         border-radius: $base-border-radius;
         background-color: white;
 

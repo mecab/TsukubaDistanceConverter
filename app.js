@@ -59,11 +59,15 @@ app.get('/convert/fromDistance', function(req, res) {
     var distance = parseInt(req.query.distance);
     var distanceUnit = convertDistance(distance);
     var expression = makeDistanceExpression(distance, distanceUnit);
+    var description = makeDistanceDescription(distance, distanceUnit);
 
     var response = {
+        distance: distance,
         start: distanceUnit.start,
         end: distanceUnit.end,
-        text: `${distance}mは、${expression}`
+        expression: expression,
+        description: description,
+        description_full: `${distance}mは、${expression}`
     };
 
     res.json(response);
