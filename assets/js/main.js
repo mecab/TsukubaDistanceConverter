@@ -188,7 +188,6 @@ var MainViewModel = (function() {
         this.tweetText = ko.pureComputed(function() {
             return this.currentConverterViewModel().tweetText();
         }, this);
-
     }
 
     MainViewModel.prototype.changeConverter = function(viewModelName) {
@@ -208,4 +207,9 @@ var MainViewModel = (function() {
     
     ko.applyBindings(viewModel);
     pager.start();
+
+    if (viewModel.canSearch()) {
+        console.log('hagehage');
+        viewModel.currentConverterViewModel().submit();
+    }
 })();
