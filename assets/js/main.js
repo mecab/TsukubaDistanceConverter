@@ -2,12 +2,15 @@
 
 //= require jquery-2.1.4.js
 //= require knockout-3.4.0.js
+//= require pager.js
 //= require linq.js
+//= require util.js
 
 var SectionConverterViewModel = (function() {
-    function SectionConverterViewModel() {
-        this.origin = ko.observable();
-        this.dest = ko.observable();
+    function SectionConverterViewModel(qp) {
+        qp = qp || {};
+        this.origin = ko.observable(qp.origin);
+        this.dest = ko.observable(qp.dest);
         this.result = ko.observable();
 
         this.isResultAvailable = ko.pureComputed(function() {
@@ -40,8 +43,9 @@ var SectionConverterViewModel = (function() {
 })();
 
 var DistanceConverterViewModel = (function() {
-    function DistanceConverterViewModel() {
-        this.distance = ko.observable();
+    function DistanceConverterViewModel(qp) {
+        qp = qp || {};
+        this.distance = ko.observable(qp.distance);
         this.result = ko.observable();
 
         this.isResultAvailable = ko.pureComputed(function() {
@@ -76,10 +80,18 @@ var DistanceConverterViewModel = (function() {
 
 var MainViewModel = (function() {
     function MainViewModel() {
-        this.sectionConverterViewModel = new SectionConverterViewModel();
-        this.distanceConverterViewModel = new DistanceConverterViewModel();
+        var qp = Util.getQueryParameters();
+        console.log(qp);
+        
+        this.sectionConverterViewModel = new SectionConverterViewModel(qp);
+        this.distanceConverterViewModel = new DistanceConverterViewModel(qp);
 
-        this.currentConverterViewModel = ko.observable(this.sectionConverterViewModel);
+        this.currentConverterViewModel = ko.observable(
+            qp.converter === 'distance' ?
+                this.distanceConverterViewModel : this.sectionConverterViewModel
+        );
+
+        this.hash = ko.observable(function() { return window.location.hash; });
 
         this.result = ko.pureComputed(function() {
             return this.currentConverterViewModel().result();
@@ -98,6 +110,7 @@ var MainViewModel = (function() {
         console.log(viewModelName);
 
         this.currentConverterViewModel(this[viewModelName]);
+        return true;
     };
 
     return MainViewModel;
@@ -106,5 +119,9 @@ var MainViewModel = (function() {
 
 (function() {
     var viewModel = new MainViewModel();
+    pager.Href.hash = '#!/';
+    pager.extendWithPage(viewModel);
+    
     ko.applyBindings(viewModel);
+    pager.start('fromSection');
 })();

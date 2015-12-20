@@ -21,6 +21,7 @@ app.set('view cache', false);
 swig.setDefaults({ cache: false });
 
 var includePaths = neat.with([
+    'node_modules/pagerjs',
     'assets/css',
     'assets/js'
 ]);

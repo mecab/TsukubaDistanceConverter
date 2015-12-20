@@ -20,11 +20,11 @@
       <div class="content">
         <ul class="accordion-tabs-minimal">
           <li class="tab-header-and-content" >
-            <a href="#" class="tab-link"
+            <a href="#!/fromSection" class="tab-link"
                data-bind="click: changeConverter.bind($data, 'sectionConverterViewModel'),
-                          css: { 'is-active': currentConverterViewModel().constructor.name === 'SectionConverterViewModel' }">区間を換算</a>
+                          css: { 'is-active': pager.getActivePage().path() == '#!/fromSection' }">区間を換算</a>
             <div class="tab-content"
-                 data-bind="css: { 'is-open': currentConverterViewModel().constructor.name === 'SectionConverterViewModel' }">
+                 data-bind="page: { id: 'fromSection' }">
               <section class="conditions" data-bind="with: sectionConverterViewModel">
                 <form data-bind="submit: submit">
                   <div class="location">
@@ -43,11 +43,11 @@
             </div>
           </li>
           <li class="tab-header-and-content">
-            <a href="#" class="tab-link"
+            <a href="#!/fromDistance" class="tab-link"
                data-bind="click: changeConverter.bind($data, 'distanceConverterViewModel'),
-                          css: { 'is-active': currentConverterViewModel().constructor.name === 'DistanceConverterViewModel' }
+                          css: { 'is-active': pager.getActivePage().path() == '#!/fromDistance' }
                           ">距離を換算</a>
-            <div class="tab-content" data-bind="css: { 'is-open': currentConverterViewModel().constructor.name === 'DistanceConverterViewModel' }">
+            <div class="tab-content" data-bind="page: { id: 'fromDistance' }">
               <section class="conditions" data-bind="with: distanceConverterViewModel">
                 <form data-bind="submit: submit">
                   <div class="distance">
