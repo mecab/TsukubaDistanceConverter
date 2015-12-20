@@ -12,3 +12,7 @@ Util.getQueryParameters = function() {
     }
     return vars;
 };
+
+Util.getBaseUrl = function() {
+    return "http://localhost:3000/";
+};

@@ -71,6 +71,11 @@
           <section class="result" data-bind="visible: isResultAvailable, if: isResultAvailable">
             <!-- ko template: currentConverterViewModel().templateName -->
             <!-- /ko -->
+            <aside>
+              <div class="btn-tweet">
+              </div>
+              <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+            </aside>
           </section>
       </div>
     </section>
@@ -80,13 +85,13 @@
     </footer>
 
     <script type="text/html" id="SectionConverterTemplate">
-      <p class="original"><span data-bind="text: result().origin"></span>から<span data-bind="text: result().destination"></span>までの距離は</p>
-      <p class="tsukuba"><span data-bind="text: result().description"></span></p>
+      <p class="original"><span data-bind="text: (result() || {}).origin"></span>から<span data-bind="text: (result() || {}).destination"></span>までの距離は</p>
+      <p class="tsukuba"><span data-bind="text: (result() || {}).description"></span></p>
     </script>
 
     <script type="text/html" id="DistanceConverterTemplate">
-      <p class="original"><span data-bind="text: result().distance"></span>メートルは</p>
-      <p class="tsukuba"><span data-bind="text: result().description"></span></p>
+      <p class="original"><span data-bind="text: (result() || {}).distance"></span>メートルは</p>
+      <p class="tsukuba"><span data-bind="text: (result() || {}).description"></span></p>
     </script>
 
     {{ js("main") }}

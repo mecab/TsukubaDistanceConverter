@@ -13,6 +13,30 @@ var SectionConverterViewModel = (function() {
         this.dest = ko.observable(qp.dest);
         this.result = ko.observable();
 
+        this.tweetUrl = ko.pureComputed(function() {
+            if (!this.isResultAvailable()) {
+                return "";
+            }
+            return Util.getBaseUrl() + pager.page.path({
+                path: 'fromSection',
+                params: {
+                    origin: this.result().origin,
+                    dest: this.result().dest
+                }
+            });
+        }, this);
+
+        this.tweetText = ko.pureComputed(function() {
+            if (!this.isResultAvailable()) {
+                return "";
+            }
+            return "筑波大距離計算機で" +
+                this.result().origin +
+                "から" +
+                this.result().destination +
+                "への距離を求めました！";
+        }, this);
+
         this.isResultAvailable = ko.pureComputed(function() {
             return this.result();
         }, this);
@@ -65,6 +89,27 @@ var DistanceConverterViewModel = (function() {
         this.canSearch = ko.pureComputed(function() {
             return this.distance();
         }, this);
+
+        this.tweetUrl = ko.pureComputed(function() {
+            if (!this.isResultAvailable()) {
+                return "";
+            }
+            return Util.getBaseUrl() + pager.page.path({
+                path: 'fromDistance',
+                params: {
+                    distance: this.result().distance
+                }
+            });
+        }, this);
+
+        this.tweetText = ko.pureComputed(function() {
+            if (!this.isResultAvailable()) {
+                return "";
+            }
+            return "筑波大距離計算機で" +
+                this.result().distance +
+                "メートルを計算しました！";
+        }, this);
     }
 
     DistanceConverterViewModel.prototype.submit = function() {
@@ -113,6 +158,21 @@ var MainViewModel = (function() {
             return this.currentConverterViewModel().result();
         }, this);
 
+        this.result.subscribe(function(newValue) {
+            var that = this;
+            console.log(newValue);
+            setTimeout(function () {
+            $('.btn-tweet').html('');
+            $('.btn-tweet').html('<a href="https://twitter.com/share" ' +
+                                 'class="twitter-share-button"{count}' +
+                                 'data-url="' + that.tweetUrl() + '"' +
+                                 'data-text="' + that.tweetText() + '"' +
+                                 'data-size="large"' +
+                                 '>Tweet</a>');
+                twttr.widgets.load();
+            }, 500);
+        }, this);
+
         this.isResultAvailable = ko.pureComputed(function() {
             return this.currentConverterViewModel().isResultAvailable();
         }, this);
@@ -120,6 +180,15 @@ var MainViewModel = (function() {
         this.canSearch = ko.pureComputed(function() {
             return this.currentConverterViewModel().canSearch();
         }, this);
+
+        this.tweetUrl = ko.pureComputed(function() {
+            return this.currentConverterViewModel().tweetUrl();
+        }, this);
+
+        this.tweetText = ko.pureComputed(function() {
+            return this.currentConverterViewModel().tweetText();
+        }, this);
+
     }
 
     MainViewModel.prototype.changeConverter = function(viewModelName) {
