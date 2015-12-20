@@ -20,12 +20,15 @@
       <div class="content">
         <ul class="accordion-tabs-minimal">
           <li class="tab-header-and-content" >
-            <a href="#!/fromSection" class="tab-link"
-               data-bind="click: changeConverter.bind($data, 'sectionConverterViewModel'),
-                          css: { 'is-active': pager.getActivePage().path() == '#!/fromSection' }">区間を換算</a>
+            <a class="tab-link"
+               data-bind="page-href: { path: 'fromSection', params: { origin: sectionConverterViewModel.origin(), dest: sectionConverterViewModel.dest() }},
+                          css: { 'is-active': pager.getActivePage().getId() == 'fromSection' }">区間を換算</a>
             <div class="tab-content"
-                 data-bind="page: { id: 'fromSection' }">
-              <section class="conditions" data-bind="with: sectionConverterViewModel">
+                 data-bind="page: { id: 'fromSection', with: sectionConverterViewModel,
+                            role: 'start',
+                            params: [ 'origin', 'dest' ],
+                            afterShow: changeConverter.bind($data, 'sectionConverterViewModel')}">
+              <section class="conditions">
                 <form data-bind="submit: submit">
                   <div class="location">
                     <label>出発地</label>
@@ -44,11 +47,15 @@
           </li>
           <li class="tab-header-and-content">
             <a href="#!/fromDistance" class="tab-link"
-               data-bind="click: changeConverter.bind($data, 'distanceConverterViewModel'),
-                          css: { 'is-active': pager.getActivePage().path() == '#!/fromDistance' }
-                          ">距離を換算</a>
-            <div class="tab-content" data-bind="page: { id: 'fromDistance' }">
-              <section class="conditions" data-bind="with: distanceConverterViewModel">
+               data-bind="page-href: { path: 'fromDistance',
+                          params: { distance: distanceConverterViewModel.distance() } },
+                          css: { 'is-active': pager.getActivePage().getId() == 'fromDistance' }">距離を換算</a>
+            <div class="tab-content" data-bind="page: {
+                                                id: 'fromDistance',
+                                                with: distanceConverterViewModel,
+                                                params: [ 'distance' ],
+                                                afterShow: changeConverter.bind($data, 'distanceConverterViewModel') }">
+              <section class="conditions">
                 <form data-bind="submit: submit">
                   <div class="distance">
                     <label>距離</label>

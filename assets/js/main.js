@@ -23,6 +23,16 @@ var SectionConverterViewModel = (function() {
     }
 
     SectionConverterViewModel.prototype.submit = function() {
+        pager.navigate(
+            pager.page.path({
+                path: 'fromSection',
+                params: {
+                    origin: this.origin.peek(),
+                    dest: this.dest.peek()
+                }
+            })
+        );
+
         var that = this;
         $.ajax({
             url: "/convert/fromAddress",
@@ -58,7 +68,13 @@ var DistanceConverterViewModel = (function() {
     }
 
     DistanceConverterViewModel.prototype.submit = function() {
-        console.log('hoge');
+        pager.navigate(
+            pager.page.path({
+                path: 'fromDistance',
+                params: { distance: this.distance.peek() }
+            })
+        );
+
         var that = this;
         $.ajax({
             url: "/convert/fromDistance",
@@ -69,7 +85,7 @@ var DistanceConverterViewModel = (function() {
         }).then(function(e) {
             that.result(e);
         });
-        return false;
+        return true;
     };
 
     DistanceConverterViewModel.prototype.templateName = "DistanceConverterTemplate";
@@ -110,7 +126,6 @@ var MainViewModel = (function() {
         console.log(viewModelName);
 
         this.currentConverterViewModel(this[viewModelName]);
-        return true;
     };
 
     return MainViewModel;
@@ -118,10 +133,10 @@ var MainViewModel = (function() {
 
 
 (function() {
-    var viewModel = new MainViewModel();
+    viewModel = new MainViewModel();
     pager.Href.hash = '#!/';
     pager.extendWithPage(viewModel);
     
     ko.applyBindings(viewModel);
-    pager.start('fromSection');
+    pager.start();
 })();
