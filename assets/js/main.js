@@ -37,6 +37,15 @@ var SectionConverterViewModel = (function() {
                 "への距離を求めました！";
         }, this);
 
+        this.facebookShareUrl = ko.pureComputed(function() {
+            return 'https://www.facebook.com/dialog/feed?app_id=' + FACEBOOK_APP_ID +
+                '&display=popup' +
+                '&link=' + encodeURI(this.tweetUrl().replace('#!/', 'hash/')) + 
+                '&redirect_uri=' + encodeURI(this.tweetUrl().replace('#!/', 'hash/')) +
+                '&caption=' + this.tweetText() +
+                '&description=' + this.tweetText();
+        }, this);
+
         this.isResultAvailable = ko.pureComputed(function() {
             return this.result();
         }, this);
@@ -109,6 +118,15 @@ var DistanceConverterViewModel = (function() {
             return "筑波大距離計算機で" +
                 this.result().distance +
                 "メートルを計算しました！";
+        }, this);
+
+        this.facebookShareUrl = ko.pureComputed(function() {
+            return 'https://www.facebook.com/dialog/feed?app_id=' + FACEBOOK_APP_ID +
+                '&display=popup' +
+                '&link=' + encodeURI(this.tweetUrl().replace('#!/', 'hash/')) + 
+                '&redirect_uri=' + encodeURI(this.tweetUrl().replace('#!/', 'hash/')) +
+                '&caption=' + this.tweetText() +
+                '&description=' + this.tweetText();
         }, this);
     }
 
@@ -187,6 +205,10 @@ var MainViewModel = (function() {
 
         this.tweetText = ko.pureComputed(function() {
             return this.currentConverterViewModel().tweetText();
+        }, this);
+
+        this.facebookShareUrl = ko.pureComputed(function() {
+            return this.currentConverterViewModel().facebookShareUrl();
         }, this);
     }
 

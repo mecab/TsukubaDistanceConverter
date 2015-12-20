@@ -9,8 +9,10 @@ var request = require('request');
 var neat = require('node-neat');
 var convertDistance = require('./distanceConverter');
 var local = require('./local');
+var redirect = require('express-redirect');
 
 var app = new express();
+redirect(app);
 app.listen(3000, function(err) {
     console.log("Express is runnning on port 3000");
 });
@@ -26,14 +28,21 @@ var includePaths = neat.with([
     'assets/js'
 ]);
 
+//app.use(rewrite(/\\?hash=(.+)&/, '#!$1/'));
+app.redirect('/hash/:params', '/#!/:params', undefined, undefined, true);
+
 app.use(require('connect-assets')({
     paths: includePaths,
     precompile: ["style.css", "main.js"]
 }));
 
+app.use('/img/', express.static(path.join(__dirname, 'assets/img')));
+
 app.get('/', (req, res) => {
     res.render('index.html');
 });
+
+app.locals.fb_app_id = local.FACEBOOK_APP_ID;
 
 function makeDistanceExpression(distance, distanceUnit) {
     var expression;

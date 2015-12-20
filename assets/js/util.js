@@ -16,3 +16,7 @@ Util.getQueryParameters = function() {
 Util.getBaseUrl = function() {
     return "http://localhost:3000/";
 };
+
+Util.getHatebuUrl = function() {
+    return 'http://b.hatena.ne.jp/entry/' + Util.getBaseUrl();
+};
