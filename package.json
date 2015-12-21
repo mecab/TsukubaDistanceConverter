@@ -13,6 +13,7 @@
   "dependencies": {
     "connect-assets": "^5.0.1",
     "express": "^4.13.3",
+    "express-redirect": "^1.2.2",
     "linq": "^3.0.5",
     "node-neat": "^1.7.2",
     "node-sass": "^3.4.2",

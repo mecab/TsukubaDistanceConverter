@@ -85,5 +85,20 @@ body {
         .tsukuba {
             font-size: 2em;
         }
+
+        .social {
+            .btn-social {
+                display: inline-block;
+                padding-right: 10px;
+            }
+        }
+    }
+}
+
+.btn-fb {
+    height: 20px;
+
+    img {
+        height: 20px;
     }
 }
