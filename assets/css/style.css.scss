@@ -74,7 +74,7 @@ body {
     .result {
         @include span-columns(12);
         @include margin(20px null null null);
-        @include pad(20px);
+        @include pad($result-padding);
         border-radius: $base-border-radius;
         background-color: white;
 
@@ -87,18 +87,37 @@ body {
         }
 
         .social {
+            text-align: center;
+
             .btn-social {
                 display: inline-block;
-                padding-right: 10px;
+                @include padding($result-padding 5px null 5px);
             }
+
+            .btn-twitter {
+                display: block;
+                @include padding(0 null $result-padding - 4px null);
+                border-bottom: 1px dashed gray;
+
+                a {
+                    display: inline-block;
+                    height: 46px;
+                    width: 188px;
+
+                    background-image: url('/img/tweet.png');
+                    background-size: cover;
+                }
+
+            }
+
+            .btn-fb {
+                height: 20px;
+
+                img {
+                    height: 20px;
+                }
+            }
+
         }
-    }
-}
-
-.btn-fb {
-    height: 20px;
-
-    img {
-        height: 20px;
     }
 }

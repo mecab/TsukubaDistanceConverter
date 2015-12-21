@@ -13,7 +13,7 @@ var SectionConverterViewModel = (function() {
         this.dest = ko.observable(qp.dest);
         this.result = ko.observable();
 
-        this.tweetUrl = ko.pureComputed(function() {
+        this.permanentUrl = ko.pureComputed(function() {
             if (!this.isResultAvailable()) {
                 return "";
             }
@@ -21,7 +21,7 @@ var SectionConverterViewModel = (function() {
                 path: 'fromSection',
                 params: {
                     origin: this.result().origin,
-                    dest: this.result().dest
+                    dest: this.result().destination
                 }
             });
         }, this);
@@ -40,8 +40,8 @@ var SectionConverterViewModel = (function() {
         this.facebookShareUrl = ko.pureComputed(function() {
             return 'https://www.facebook.com/dialog/feed?app_id=' + FACEBOOK_APP_ID +
                 '&display=popup' +
-                '&link=' + encodeURI(this.tweetUrl().replace('#!/', 'hash/')) + 
-                '&redirect_uri=' + encodeURI(this.tweetUrl().replace('#!/', 'hash/')) +
+                '&link=' + encodeURI(this.permanentUrl().replace('#!/', 'hash/')) +
+                '&redirect_uri=' + encodeURI(this.permanentUrl().replace('#!/', 'hash/')) +
                 '&caption=' + this.tweetText() +
                 '&description=' + this.tweetText();
         }, this);
@@ -99,7 +99,7 @@ var DistanceConverterViewModel = (function() {
             return this.distance();
         }, this);
 
-        this.tweetUrl = ko.pureComputed(function() {
+        this.permanentUrl = ko.pureComputed(function() {
             if (!this.isResultAvailable()) {
                 return "";
             }
@@ -109,6 +109,13 @@ var DistanceConverterViewModel = (function() {
                     distance: this.result().distance
                 }
             });
+        }, this);
+
+        this.tweetUrl = ko.pureComputed(function() {
+            return 'https://twitter.com/intent/tweet?' +
+                'original_referer=' + encodeURIComponent(this.permanentUrl()) +
+                '&text=' + this.tweetText() +
+                '&url=' + encodeURIComponent(this.permanentUrl());
         }, this);
 
         this.tweetText = ko.pureComputed(function() {
@@ -123,8 +130,8 @@ var DistanceConverterViewModel = (function() {
         this.facebookShareUrl = ko.pureComputed(function() {
             return 'https://www.facebook.com/dialog/feed?app_id=' + FACEBOOK_APP_ID +
                 '&display=popup' +
-                '&link=' + encodeURI(this.tweetUrl().replace('#!/', 'hash/')) + 
-                '&redirect_uri=' + encodeURI(this.tweetUrl().replace('#!/', 'hash/')) +
+                '&link=' + encodeURI(this.permanentUrl().replace('#!/', 'hash/')) +
+                '&redirect_uri=' + encodeURI(this.permanentUrl().replace('#!/', 'hash/')) +
                 '&caption=' + this.tweetText() +
                 '&description=' + this.tweetText();
         }, this);
@@ -183,7 +190,7 @@ var MainViewModel = (function() {
             $('.btn-tweet').html('');
             $('.btn-tweet').html('<a href="https://twitter.com/share" ' +
                                  'class="twitter-share-button"{count}' +
-                                 'data-url="' + that.tweetUrl() + '"' +
+                                 'data-url="' + that.permanentUrl() + '"' +
                                  'data-text="' + that.tweetText() + '"' +
                                  'data-size="large"' +
                                  '>Tweet</a>');
@@ -199,12 +206,19 @@ var MainViewModel = (function() {
             return this.currentConverterViewModel().canSearch();
         }, this);
 
-        this.tweetUrl = ko.pureComputed(function() {
-            return this.currentConverterViewModel().tweetUrl();
+        this.permanentUrl = ko.pureComputed(function() {
+            return this.currentConverterViewModel().permanentUrl();
         }, this);
 
         this.tweetText = ko.pureComputed(function() {
             return this.currentConverterViewModel().tweetText();
+        }, this);
+
+        this.tweetUrl = ko.pureComputed(function() {
+            return 'https://twitter.com/intent/tweet?' +
+                'original_referer=' + encodeURIComponent(this.permanentUrl()) +
+                '&text=' + this.tweetText() +
+                '&url=' + encodeURIComponent(this.permanentUrl());
         }, this);
 
         this.facebookShareUrl = ko.pureComputed(function() {

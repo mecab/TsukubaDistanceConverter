@@ -80,7 +80,10 @@
             <!-- ko template: currentConverterViewModel().templateName -->
             <!-- /ko -->
             <aside class="social">
-              <div class="btn-social btn-tweet"></div>
+              <div class="btn-social btn-twitter">
+                <a data-bind="attr: { href: tweetUrl }">
+                </a>
+              </div>
               <div class="btn-social btn-hatebu">
                 <a class="hatena-bookmark-button"
                    data-hatena-bookmark-title="筑波大距離計算機"
@@ -91,9 +94,9 @@
                 >
                   <img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" />
                 </a>
-                <div class="btn-social btn-fb">
-                  <a data-bind="attr: { href: facebookShareUrl }"><img src="/img/fb_share.png" class=""/></a>
-                </div>
+              </div>
+              <div class="btn-social btn-fb">
+                <a data-bind="attr: { href: facebookShareUrl }"><img src="/img/fb_share.png" class=""/></a>
               </div>
             </aside>
           </section>
