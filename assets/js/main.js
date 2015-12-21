@@ -21,7 +21,7 @@ var SectionConverterViewModel = (function() {
                 path: 'fromSection',
                 params: {
                     origin: this.result().origin,
-                    dest: this.result().dest
+                    dest: this.result().destination
                 }
             });
         }, this);
