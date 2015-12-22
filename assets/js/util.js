@@ -14,7 +14,12 @@ Util.getQueryParameters = function() {
 };
 
 Util.getBaseUrl = function() {
-    return "http://localhost:3000/";
+    if (location.origin) {
+        return location.origin;
+    }
+    else {
+        return location.protocol + "//" + location.host;
+    }
 };
 
 Util.getHatebuUrl = function() {
