@@ -48,7 +48,7 @@
                     <input type="text" placeholder="有楽町駅"
                            data-bind="textInput: dest, placeAutoComplete: true" />
                   </div>
-                  <input type="submit" value="換算" data-bind="enable: canSearch"/>
+                  <input type="submit" value="換算" data-bind="enable: canSearch, value: submitButtonText"/>
                 </form>
               </section>
             </div>
@@ -71,35 +71,38 @@
                              data-bind="textInput: distance" />
                       <p>メートル</p>
                   </div>
-                  <input type="submit" value="換算" data-bind="enable: canSearch" />
+                  <input type="submit" value="換算" data-bind="enable: canSearch, value: submitButtonText" />
                 </form>
               </section>
             </div>
           </li>
-          <section class="result" data-bind="visible: isResultAvailable, if: isResultAvailable">
-            <!-- ko template: currentConverterViewModel().templateName -->
-            <!-- /ko -->
-            <aside class="social">
-              <div class="btn-social btn-twitter">
-                <a data-bind="attr: { href: tweetUrl }">
-                </a>
-              </div>
-              <div class="btn-social btn-hatebu">
-                <a class="hatena-bookmark-button"
-                   data-hatena-bookmark-title="筑波大距離計算機"
-                   data-hatena-bookmark-layout="standard-balloon"
-                   data-hatena-bookmark-lang="ja"
-                   title="このエントリーをはてなブックマークに追加"
-                   data-bind="attr: { href: Util.getHatebuUrl() }"
-                >
-                  <img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" />
-                </a>
-              </div>
-              <div class="btn-social btn-fb">
-                <a data-bind="attr: { href: facebookShareUrl }"><img src="/img/fb_share.png" class=""/></a>
-              </div>
-            </aside>
-          </section>
+        </ul>
+        <section class="result" data-bind="visible: isResultAvailable, if: isResultAvailable">
+          <!-- ko template: currentConverterViewModel().templateName -->
+          <!-- /ko -->
+          <aside class="social">
+            <div class="btn-social btn-twitter">
+              <a data-bind="attr: { href: tweetUrl }">
+              </a>
+            </div>
+            <div class="btn-social btn-hatebu">
+              <a class="hatena-bookmark-button"
+                 data-hatena-bookmark-title="筑波大距離計算機"
+                 data-hatena-bookmark-layout="standard-balloon"
+                 data-hatena-bookmark-lang="ja"
+                 title="このエントリーをはてなブックマークに追加"
+                 data-bind="attr: { href: Util.getHatebuUrl() }"
+              >
+                <img src="https://b.st-hatena.com/images/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" />
+              </a>
+            </div>
+            <div class="btn-social btn-fb">
+              <a data-bind="attr: { href: facebookShareUrl }"><img src="/img/fb_share.png" class=""/></a>
+            </div>
+          </aside>
+        </section>
+        <section class="error-message" data-bind="template: { name: 'ErrorTemplate', if: currentConverterViewModel().error, data: currentConverterViewModel }, visible: currentConverterViewModel().error">
+        </section>
       </div>
     </section>
 
@@ -115,6 +118,23 @@
     <script type="text/html" id="DistanceConverterTemplate">
       <p class="original"><span data-bind="text: (result() || {}).distance"></span>メートルは</p>
       <p class="tsukuba"><span data-bind="text: (result() || {}).description"></span></p>
+    </script>
+
+    <script type="text/html" id="ErrorTemplate">
+      <h2>計算できませんでした(๑´•.̫ • `๑)</h2>
+      <p data-bind="visible: error() === 'NOT_FOUND'">
+        出発地または目的地を見つけられませんでした。入力中に表示される補完候補の中から選択するとうまくいくかもしれません。
+        もしも、メジャーそうなところを、しかも補完候補の中から選んでいるのにこのエラーが出ている場合は<a href="https://twitter.com/intent/tweet?text=@mecab 場所が見つからないって言われるんですけどー💢">@mecabに教えてくれる</a>とうれしいです</p>
+
+      <p data-bind="visible: error() === 'ZERO_RESULTS'">
+        出発地と目的地間のルートが見つけられませんでした。入れた2地点、もしかしてそもそも歩けない距離なのでは。。。(๑´•.̫ • `๑)&nbsp;
+        もしも、明らかに歩けるルートのはずなのに、このエラーが出ている場合は<a href="https://twitter.com/intent/tweet?text=@mecab ルートが見つからないって言われるんですけどー💢">@mecabに教えてくれる</a>とうれしいです</p>
+
+      <p data-bind="visible: error() === 'NETWORK' || error() === 'TIMEOUT'">
+        ネットワークが遅いか、調子が悪いみたいなので、少し待ってから試してみてください。そんなことはないはず...！という場合は<a href="https://twitter.com/intent/tweet?text=@mecab 俺のネットワークがこんなに調子悪いわけがない💢">@mecabに教えてくれる</a>とうれしいです</p>
+
+      <p data-bind="visible: error() !== 'NOT_FOUND' && error() !== 'ZERO_RESULTS' && error() !== 'NETWORK' && error() !== 'TIMEOUT'">
+        このメッセージを見たあなた、おめでとうございます。これはなかなか見れないはずの謎のエラーなので<a href="https://twitter.com/intent/tweet?text=@mecab 謎のエラーがでたんですが💢💢💢">@mecabに教えてくれる</a>とうれしいです。すみません。。。</p>
     </script>
 
     <!-- Twitter -->
