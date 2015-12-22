@@ -1,6 +1,6 @@
 {
   "name": "tsukuba-dist",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Convert a distance between two locations to Tsukuba Unit distance",
   "main": "app.js",
   "scripts": {
