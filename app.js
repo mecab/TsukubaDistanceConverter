@@ -13,8 +13,11 @@ var redirect = require('express-redirect');
 
 var app = new express();
 redirect(app);
-app.listen(3000, function(err) {
-    console.log("Express is runnning on port 3000");
+
+app.set('port', process.env.PORT || 3000);
+
+app.listen(app.get('port'), function(err) {
+    console.log("Express is runnning on port: " + app.get('port'));
 });
 app.engine('html', swig.renderFile);
 app.set('view engine', 'html');
