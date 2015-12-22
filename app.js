@@ -43,6 +43,7 @@ app.get('/', (req, res) => {
 });
 
 app.locals.fb_app_id = local.FACEBOOK_APP_ID;
+app.locals.google_maps_api_browser_key = local.GOOGLE_MAPS_API_BROWSER_KEY;
 
 function makeDistanceExpression(distance, distanceUnit) {
     var expression;

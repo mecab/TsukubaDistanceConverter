@@ -40,37 +40,13 @@
                 <form data-bind="submit: submit">
                   <div class="location">
                     <label>出発地</label>
-                    <div class="autocomplete">
-                      <input type="text" placeholder="東京駅"
-                             data-bind="textInput: origin" />
-                      <div class="ac-candidates">
-                        <ul class="ac-candidates-container">
-                          <li class="ac-candidate">
-                            hoge
-                          </li>
-                          <li class="ac-candidate">
-                            fuga
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
+                    <input type="text" placeholder="東京駅"
+                           data-bind="textInput: origin, placeAutoComplete: true" />
                   </div>
                   <div class="location">
                     <label>目的地</label>
-                    <div class="autocomplete">
-                      <input type="text" placeholder="有楽町駅"
-                             data-bind="textInput: dest" />
-                      <div class="ac-candidates">
-                        <ul class="ac-candidates-container">
-                          <li class="ac-candidate">
-                            hoge
-                          </li>
-                          <li class="ac-candidate">
-                            fuga
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
+                    <input type="text" placeholder="有楽町駅"
+                           data-bind="textInput: dest, placeAutoComplete: true" />
                   </div>
                   <input type="submit" value="換算" data-bind="enable: canSearch"/>
                 </form>
@@ -147,7 +123,9 @@
     <!-- Hatebu -->
     <script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
 
+    <!-- Init Google Maps Autocomplete -->
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_browser_key }}&amp;signed_in=true&amp;libraries=places&amp;language=ja&amp;callback=initAutoComplete"></script>
+
     {{ js("main") }}
   </body>
 </html>
-

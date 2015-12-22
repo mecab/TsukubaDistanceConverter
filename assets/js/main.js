@@ -5,6 +5,7 @@
 //= require pager.js
 //= require linq.js
 //= require util.js
+//= require autoComplete.js
 
 var SectionConverterViewModel = (function() {
     function SectionConverterViewModel(qp) {
