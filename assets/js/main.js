@@ -5,6 +5,7 @@
 //= require pager.js
 //= require linq.js
 //= require util.js
+//= require autoComplete.js
 
 var SectionConverterViewModel = (function() {
     function SectionConverterViewModel(qp) {
@@ -12,6 +13,8 @@ var SectionConverterViewModel = (function() {
         this.origin = ko.observable(qp.origin);
         this.dest = ko.observable(qp.dest);
         this.result = ko.observable();
+        this.isProcessing = ko.observable(false);
+        this.error = ko.observable();
 
         this.permanentUrl = ko.pureComputed(function() {
             if (!this.isResultAvailable()) {
@@ -47,11 +50,15 @@ var SectionConverterViewModel = (function() {
         }, this);
 
         this.isResultAvailable = ko.pureComputed(function() {
-            return this.result();
+            return this.result() && !this.error();
         }, this);
 
         this.canSearch = ko.pureComputed(function() {
-            return this.origin() && this.dest();
+            return this.origin() && this.dest() && !this.isProcessing();
+        }, this);
+
+        this.submitButtonText = ko.pureComputed(function() {
+            return this.isProcessing() ? "換算中" : "換算";
         }, this);
     }
 
@@ -67,16 +74,41 @@ var SectionConverterViewModel = (function() {
         );
 
         var that = this;
+        this.isProcessing(true);
+        this.result(null);
+        this.error(null);
         $.ajax({
             url: "/convert/fromAddress",
             data: {
                 origin: this.origin.peek(),
                 dest: this.dest.peek()
             },
-            dataType: 'json'
-        }).then(function(e) {
-            that.result(e);
-        });
+            dataType: 'json',
+            timeout: 5000
+        })
+            .done(function(e) {
+                that.result(e);
+            })
+            .fail(function(jqxhr, textStatus, error) {
+                if (!error && jqxhr.readyState === 0) {
+                    console.error("NETWORK");
+                    that.error("NETWORK");
+                }
+                else if (error == "timeout") {
+                    console.error("TIMEOUT");
+                    that.error("TIMEOUT");
+                }
+                else if ((jqxhr.responseJSON || {}).err) {
+                    console.error(jqxhr.responseJSON.err);
+                    that.error(jqxhr.responseJSON.err);
+                }
+                else {
+                    that.error("UNKNOWN");
+                }
+            })
+            .always(function(e) {
+                that.isProcessing(false);
+            });
         return false;
     };
 
@@ -90,13 +122,15 @@ var DistanceConverterViewModel = (function() {
         qp = qp || {};
         this.distance = ko.observable(qp.distance);
         this.result = ko.observable();
+        this.isProcessing = ko.observable(false);
+        this.error = ko.observable();
 
         this.isResultAvailable = ko.pureComputed(function() {
-            return this.result();
+            return this.result() && !this.error();
         }, this);
 
         this.canSearch = ko.pureComputed(function() {
-            return this.distance();
+            return this.distance() && !this.isProcessing();
         }, this);
 
         this.permanentUrl = ko.pureComputed(function() {
@@ -135,6 +169,10 @@ var DistanceConverterViewModel = (function() {
                 '&caption=' + this.tweetText() +
                 '&description=' + this.tweetText();
         }, this);
+
+        this.submitButtonText = ko.pureComputed(function() {
+            return this.isProcessing() ? "換算中" : "換算";
+        }, this);
     }
 
     DistanceConverterViewModel.prototype.submit = function() {
@@ -146,15 +184,40 @@ var DistanceConverterViewModel = (function() {
         );
 
         var that = this;
+        this.isProcessing(true);
+        this.result(null);
+        this.error(null);
         $.ajax({
             url: "/convert/fromDistance",
             data: {
                 distance: this.distance.peek()
             },
-            dataType: 'json'
-        }).then(function(e) {
-            that.result(e);
-        });
+            dataType: 'json',
+            timeout: 5000
+        })
+            .done(function(e) {
+                that.result(e);
+            })
+            .fail(function(jqxhr, textStatus, error) {
+                if (!error && jqxhr.readyState === 0) {
+                    console.error("NETWORK");
+                    that.error("NETWORK");
+                }
+                else if (error == "timeout") {
+                    console.error("TIMEOUT");
+                    that.error("TIMEOUT");
+                }
+                else if ((jqxhr.responseJSON || {}).err) {
+                    console.error(jqxhr.responseJSON.err);
+                    that.error(jqxhr.responseJSON.err);
+                }
+                else {
+                    that.error("UNKNOWN");
+                }
+            })
+            .always(function(e) {
+                that.isProcessing(false);
+            });
         return true;
     };
 
@@ -167,7 +230,6 @@ var DistanceConverterViewModel = (function() {
 var MainViewModel = (function() {
     function MainViewModel() {
         var qp = Util.getQueryParameters();
-        console.log(qp);
         
         this.sectionConverterViewModel = new SectionConverterViewModel(qp);
         this.distanceConverterViewModel = new DistanceConverterViewModel(qp);
@@ -185,7 +247,6 @@ var MainViewModel = (function() {
 
         this.result.subscribe(function(newValue) {
             var that = this;
-            console.log(newValue);
             setTimeout(function () {
             $('.btn-tweet').html('');
             $('.btn-tweet').html('<a href="https://twitter.com/share" ' +
@@ -227,8 +288,6 @@ var MainViewModel = (function() {
     }
 
     MainViewModel.prototype.changeConverter = function(viewModelName) {
-        console.log(viewModelName);
-
         this.currentConverterViewModel(this[viewModelName]);
     };
 
@@ -245,7 +304,6 @@ var MainViewModel = (function() {
     pager.start();
 
     if (viewModel.canSearch()) {
-        console.log('hagehage');
         viewModel.currentConverterViewModel().submit();
     }
 })();

@@ -43,6 +43,7 @@ app.get('/', (req, res) => {
 });
 
 app.locals.fb_app_id = local.FACEBOOK_APP_ID;
+app.locals.google_maps_api_browser_key = local.GOOGLE_MAPS_API_BROWSER_KEY;
 
 function makeDistanceExpression(distance, distanceUnit) {
     var expression;
@@ -139,3 +140,25 @@ app.get('/convert/fromAddress', function(req, res) {
         res.json(response);
     });
 });
+
+// Development time livereload settings
+(() => {
+    if (process.env.NODE_ENV !== 'production') {
+        try {
+            var livereload = require('livereload');
+        }
+        catch(ex) {
+            console.warn("Livereload couldn't be loaded.");
+            console.warn("Reload the brower by yourself. Work hard! 👼");
+            livereload = undefined;
+        }
+
+        if (livereload) {
+            console.log("Livereload is enabled 🌀");
+            var server = livereload.createServer({ exts: [ 'scss' ] });
+            server.watch([
+                path.join(__dirname)
+            ]);
+        }
+    }
+})();

@@ -13,6 +13,11 @@ body {
         @include padding($base-spacing / 2);
         color: white;
         text-align: center;
+
+        a {
+            color: white;
+            text-decoration: underline;
+        }
     }
 }
 
@@ -71,11 +76,24 @@ body {
         }
     }
 
-    .result {
+    .result,
+    .error-message {
         @include span-columns(12);
         @include margin(20px null null null);
         @include pad($result-padding);
         border-radius: $base-border-radius;
+    }
+
+    .error-message {
+        background-color: rgba(100, 0, 0, 0.2);
+        border-radius: $base-border-radius;
+
+        h2 {
+            font-size: 2em;
+        }
+    }
+
+    .result {
         background-color: white;
 
         .original {
