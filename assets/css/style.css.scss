@@ -5,7 +5,7 @@
 @import "./tab";
 
 body {
-    background-color: #19B8C8;
+    background-color: $tsukuba-blue;
     margin: 0;
     padding: 0;
 
@@ -118,6 +118,37 @@ body {
                 }
             }
 
+        }
+    }
+}
+
+.autocomplete {
+    position: relative;
+
+    input {
+    }
+
+    .ac-candidates {
+        position: relative;
+        display: block;
+        z-index: 100;
+        height: 0;
+        @include margin(-$base-spacing / 2 null null null);
+
+        .ac-candidates-container {
+            position: relative;
+            background-color: white;
+            border-radius: $base-border-radius;
+
+            .ac-candidate {
+                @include padding($small-spacing / 2 $base-spacing / 2);
+                border-radius: $base-border-radius;
+
+                &:hover {
+                    background-color: $tsukuba-blue;
+                    color: white;
+                }
+            }
         }
     }
 }

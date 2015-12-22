@@ -40,13 +40,37 @@
                 <form data-bind="submit: submit">
                   <div class="location">
                     <label>出発地</label>
-                    <input type="text" placeholder="東京駅"
-                           data-bind="textInput: origin" />
+                    <div class="autocomplete">
+                      <input type="text" placeholder="東京駅"
+                             data-bind="textInput: origin" />
+                      <div class="ac-candidates">
+                        <ul class="ac-candidates-container">
+                          <li class="ac-candidate">
+                            hoge
+                          </li>
+                          <li class="ac-candidate">
+                            fuga
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
                   </div>
                   <div class="location">
                     <label>目的地</label>
-                    <input type="text" placeholder="有楽町駅"
-                           data-bind="textInput: dest" />
+                    <div class="autocomplete">
+                      <input type="text" placeholder="有楽町駅"
+                             data-bind="textInput: dest" />
+                      <div class="ac-candidates">
+                        <ul class="ac-candidates-container">
+                          <li class="ac-candidate">
+                            hoge
+                          </li>
+                          <li class="ac-candidate">
+                            fuga
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
                   </div>
                   <input type="submit" value="換算" data-bind="enable: canSearch"/>
                 </form>
