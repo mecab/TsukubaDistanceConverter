@@ -230,7 +230,6 @@ var DistanceConverterViewModel = (function() {
 var MainViewModel = (function() {
     function MainViewModel() {
         var qp = Util.getQueryParameters();
-        console.log(qp);
         
         this.sectionConverterViewModel = new SectionConverterViewModel(qp);
         this.distanceConverterViewModel = new DistanceConverterViewModel(qp);
@@ -248,7 +247,6 @@ var MainViewModel = (function() {
 
         this.result.subscribe(function(newValue) {
             var that = this;
-            console.log(newValue);
             setTimeout(function () {
             $('.btn-tweet').html('');
             $('.btn-tweet').html('<a href="https://twitter.com/share" ' +
@@ -290,8 +288,6 @@ var MainViewModel = (function() {
     }
 
     MainViewModel.prototype.changeConverter = function(viewModelName) {
-        console.log(viewModelName);
-
         this.currentConverterViewModel(this[viewModelName]);
     };
 
@@ -308,7 +304,6 @@ var MainViewModel = (function() {
     pager.start();
 
     if (viewModel.canSearch()) {
-        console.log('hagehage');
         viewModel.currentConverterViewModel().submit();
     }
 })();
