@@ -139,3 +139,25 @@ app.get('/convert/fromAddress', function(req, res) {
         res.json(response);
     });
 });
+
+// Development time livereload settings
+(() => {
+    if (process.env.NODE_ENV !== 'production') {
+        try {
+            var livereload = require('livereload');
+        }
+        catch(ex) {
+            console.warn("Livereload couldn't be loaded.");
+            console.warn("Reload the brower by yourself. Work hard! 👼");
+            livereload = undefined;
+        }
+
+        if (livereload) {
+            console.log("Livereload is enabled 🌀");
+            var server = livereload.createServer({ exts: [ 'scss' ] });
+            server.watch([
+                path.join(__dirname)
+            ]);
+        }
+    }
+})();

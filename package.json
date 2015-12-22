@@ -20,5 +20,8 @@
     "pagerjs": "^1.0.0",
     "request": "^2.67.0",
     "swig": "^1.4.2"
+  },
+  "devDependencies": {
+    "livereload": "^0.4.0"
   }
 }
