@@ -2,8 +2,8 @@
 $tsukuba-purple: #6600CC;
 
 // Typography
-@import url("http://fonts.googleapis.com/earlyaccess/notosansjapanese.css");
-$base-font-family: 'Noto Sans Japanese', $helvetica;
+// @import url("http://fonts.googleapis.com/earlyaccess/notosansjapanese.css");
+$base-font-family: 'Noto Sans Japanese', "Hiragino Kaku Gothic ProN", "Yu Gothic", YuGothic, Meiryo, $helvetica;
 $heading-font-family: $base-font-family;
 
 // Font Sizes
