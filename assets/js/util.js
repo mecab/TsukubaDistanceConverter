@@ -15,10 +15,10 @@ Util.getQueryParameters = function() {
 
 Util.getBaseUrl = function() {
     if (location.origin) {
-        return location.origin;
+        return location.origin + "/";
     }
     else {
-        return location.protocol + "//" + location.host;
+        return location.protocol + "//" + location.host + "/";
     }
 };
 

@@ -147,8 +147,7 @@ var DistanceConverterViewModel = (function() {
 
         this.tweetUrl = ko.pureComputed(function() {
             return 'https://twitter.com/intent/tweet?' +
-                'original_referer=' + encodeURIComponent(this.permanentUrl()) +
-                '&text=' + this.tweetText() +
+                '&text=' + encodeURIComponent(this.tweetText()) +
                 '&url=' + encodeURIComponent(this.permanentUrl());
         }, this);
 
@@ -277,8 +276,7 @@ var MainViewModel = (function() {
 
         this.tweetUrl = ko.pureComputed(function() {
             return 'https://twitter.com/intent/tweet?' +
-                'original_referer=' + encodeURIComponent(this.permanentUrl()) +
-                '&text=' + this.tweetText() +
+                '&text=' + encodeURIComponent(this.tweetText()) +
                 '&url=' + encodeURIComponent(this.permanentUrl());
         }, this);
 
