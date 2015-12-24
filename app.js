@@ -11,19 +11,29 @@ var convertDistance = require('./distanceConverter');
 var local = require('./local');
 var redirect = require('express-redirect');
 
+var isProduction = process.env.NODE_ENV === 'production';
+var isDevelopment = !isProduction;
+
+if (isProduction) {
+    console.info("🏭 We will run in PRODUCTION 🏭");
+}
+else {
+    console.info("👷 We will run in DEVELOPMENT 👷");
+}
+
 var app = new express();
 redirect(app);
 
 app.set('port', process.env.PORT || 3000);
-
 app.listen(app.get('port'), function(err) {
     console.log("Express is runnning on port: " + app.get('port'));
 });
+
 app.engine('html', swig.renderFile);
 app.set('view engine', 'html');
 app.set('views', path.join(__dirname, 'views'));
-app.set('view cache', false);
-swig.setDefaults({ cache: false });
+app.set('view cache', isProduction ? true : false);
+swig.setDefaults({ cache: isProduction ? "memory" : false });
 
 var includePaths = neat.with([
     'node_modules/pagerjs',
@@ -147,7 +157,7 @@ app.get('/convert/fromAddress', function(req, res) {
 
 // Development time livereload settings
 (() => {
-    if (process.env.NODE_ENV !== 'production') {
+    if (isDevelopment) {
         try {
             var livereload = require('livereload');
         }
