@@ -33,7 +33,7 @@ var SectionConverterViewModel = (function() {
             if (!this.isResultAvailable()) {
                 return "";
             }
-            return "筑波大距離計算機で" +
+            return "筑波大距離計算器で" +
                 this.result().origin +
                 "から" +
                 this.result().destination +
@@ -155,7 +155,7 @@ var DistanceConverterViewModel = (function() {
             if (!this.isResultAvailable()) {
                 return "";
             }
-            return "筑波大距離計算機で" +
+            return "筑波大距離計算器で" +
                 this.result().distance +
                 "メートルを計算しました！";
         }, this);
