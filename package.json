@@ -16,12 +16,12 @@
     "express-redirect": "^1.2.2",
     "linq": "^3.0.5",
     "node-neat": "^1.7.2",
-    "node-sass": "^3.4.2",
+    "node-sass": "^4.14.1",
     "pagerjs": "^1.0.0",
     "request": "^2.67.0",
     "swig": "^1.4.2"
   },
   "devDependencies": {
-    "livereload": "^0.4.0"
+    "livereload": "^0.9.3"
   }
 }
